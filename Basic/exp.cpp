@@ -64,7 +64,10 @@ int ConstantExp::getValue() {
  */
 
 IdentifierExp::IdentifierExp(string name) {
-   this->name = name;
+    if(name=="RUN"||name=="LIST"||name=="CLEAR"||name=="QUIT"||name=="GOTO"||name=="IF"||name=="GOTO"||name=="IF"||name=="REM"||name=="END"||name=="HELP"||name=="INPUT"||name=="PRINT"||name=="LET")
+        error("SYNTAX ERROR");
+    else
+        this->name = name;
 }
 
 int IdentifierExp::eval(EvalState & state) {
