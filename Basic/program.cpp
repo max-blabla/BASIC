@@ -31,16 +31,13 @@ void Program::clear() {
 }
 
 void Program::addSourceLine(int lineNumber, string line) {
-    if(sourcelist.count(lineNumber)){
-    sourcelist.erase(lineNumber);}
+    sourcelist.erase(lineNumber);
     sourcelist.insert(pair<int,string>(lineNumber,line));
    // Replace this stub with your own code
 }
 
 void Program::removeSourceLine(int lineNumber) {
-    if(sourcelist.count(lineNumber))
         sourcelist.erase(lineNumber);
-    if(statementlist.count(lineNumber))
         statementlist.erase(lineNumber);
 
    // Replace this stub with your own code
@@ -54,8 +51,7 @@ string Program::getSourceLine(int lineNumber) {
 }
 
 void Program::setParsedStatement(int lineNumber, Statement *stmt) {
-    if(statementlist.count(lineNumber))
-        statementlist.erase(lineNumber);
+    statementlist.erase(lineNumber);
     statementlist.insert(pair<int,Statement*>(lineNumber,stmt));
    // Replace this stub with your own code
 }
@@ -66,6 +62,8 @@ Statement *Program::getParsedStatement(int lineNumber) {
 
 int Program::getFirstLineNumber() {
    map<int,Statement*>::iterator code_iter;
+   if(statementlist.empty())
+       return 0;
    code_iter=statementlist.begin();
    return code_iter->first;    // Replace this stub with your own code
 }

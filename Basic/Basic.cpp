@@ -82,7 +82,7 @@ void parsestatement(string line, Program & program, EvalState & state){
         if(flag)
             runit(statement,line.c_str()+position,program,state);
         else{
-            Statement* stmt;
+            Statement* stmt=nullptr;
             stmt=stmt->parse(line.c_str());
             stmt->execute(state);
         }
@@ -111,7 +111,7 @@ void parsestatement(string line, Program & program, EvalState & state){
         }
         position--;
         program.addSourceLine(linenumber,line.c_str()+position);
-        Statement* stmt;
+        Statement* stmt=nullptr;
         stmt=stmt->parse(line.c_str()+position);
         program.setParsedStatement(linenumber,stmt);
     }
@@ -144,15 +144,17 @@ void runit(string statement,const char* str, Program & program, EvalState & stat
          catch(LINENUMBERERROR){error("LINE NUMBER ERROR");}
     }
     if(statement=="LIST"){
-        int position=program.getFirstLineNumber();
-        do{
-            string line=program.getSourceLine(position);
-            //输出那些东西即可
-            if(!program.empty()){
-            cout<<position<<line<<endl;
-            position=program.getNextLineNumber(position);}
-        } while(position);
-
+        if(!program.empty()) {
+            int position = program.getFirstLineNumber();
+            do {
+                string line = program.getSourceLine(position);
+                //输出那些东西即可
+                if (!program.empty()) {
+                    cout << position << line << endl;
+                    position = program.getNextLineNumber(position);
+                }
+            } while (position);
+        }
     }
     if(statement=="PRINT"){
         TokenScanner scanner;
@@ -206,8 +208,8 @@ void runit(string statement,const char* str, Program & program, EvalState & stat
     }
     if(statement=="QUIT"){
         //要记得删东西
-        program.clear();
-        state.clear();
+        //program.clear();
+        //state.clear();
         exit(0);
     }
     if(statement=="HELP"){
