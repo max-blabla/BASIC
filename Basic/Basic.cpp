@@ -195,7 +195,7 @@ void runit(string statement,const char* str, Program & program, EvalState & stat
                     throw(INVALIDNUMBER());
             }
             break;
-          }catch(INVALIDNUMBER){error("INVALID NUMBER");};
+          }catch(INVALIDNUMBER){cout<<"INVALID NUMBER"<<endl;};
         }
         int length=strlen(tmp.c_str());
         for(int i=0;i<length;i++)
