@@ -191,16 +191,23 @@ void runit(string statement,const char* str, Program & program, EvalState & stat
             getline(cin,tmp);
             int length=strlen(tmp.c_str());
             for(int i=0;i<length;i++){
-                if(tmp[i]>'9'||tmp[i]<'0')
+                if((tmp[i]>'9'&&tmp[i]!='-')||(tmp[i]<'0'&&tmp[i]!='-'))
                     throw(INVALIDNUMBER());
             }
             break;
           }catch(INVALIDNUMBER){cout<<"INVALID NUMBER"<<endl;};
         }
         int length=strlen(tmp.c_str());
-        for(int i=0;i<length;i++)
+        if(tmp[0]=='-'){
+        for(int i=1;i<length;i++)
             value=value*10+tmp[i]-'0';
-        state.setValue(str+position,value);
+        state.setValue(str+position,-value);
+        }
+        else{
+            for(int i=0;i<length;i++)
+                value=value*10+tmp[i]-'0';
+            state.setValue(str+position,value);
+        }
     }
     if(statement=="CLEAR"){
         program.clear();

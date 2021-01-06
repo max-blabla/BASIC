@@ -67,8 +67,7 @@ void SequentialStatement::execute(EvalState&state){
         while(true){
             if(sourceline[position]==' '){
                 position++;
-                continue;
-            }
+                continue;}
             break;
         }
         while(true){
@@ -77,16 +76,23 @@ void SequentialStatement::execute(EvalState&state){
                 getline(cin,tmp);
                 int length=strlen(tmp.c_str());
                 for(int i=0;i<length;i++){
-                    if(tmp[i]>'9'||tmp[i]<'0')
+                    if((tmp[i]>'9'&&tmp[i]!='-')||(tmp[i]<'0'&&tmp[i]!='-'))
                         throw(INVALIDNUMBER());
                 }
                 break;
             }catch(INVALIDNUMBER){cout<<"INVALID NUMBER"<<endl;};
         }
         int length=strlen(tmp.c_str());
-        for(int i=0;i<length;i++)
-            value=value*10+tmp[i]-'0';
-        state.setValue(sourceline.c_str()+position,value);
+        if(tmp[0]=='-'){
+            for(int i=1;i<length;i++)
+                value=value*10+tmp[i]-'0';
+            state.setValue(sourceline.c_str()+position,-value);
+        }
+        else{
+            for(int i=0;i<length;i++)
+                value=value*10+tmp[i]-'0';
+            state.setValue(sourceline.c_str()+position,value);
+        }
     }
     if(op=="END"){throw END();}
 }
